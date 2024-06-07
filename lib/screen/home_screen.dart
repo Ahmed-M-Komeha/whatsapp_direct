@@ -18,13 +18,13 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController msgController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   GlobalKey<FormState> globalKey = GlobalKey();
-  var phoneNumber = "";
-  var msg = '';
+
   var code = '+20';
 
   void openWhats() {
     setState(() {
-      var url = 'https://wa.me/$code$phoneNumber?text=$msg';
+      var url =
+          'https://wa.me/$code${phoneController.text}?text=${msgController.text}';
       launchUrl(Uri.parse(url));
       msgController.clear();
     });
@@ -46,11 +46,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 28,
               ),
               CustomTextField(
-                onChanged: (value) {
-                
-                    msg = value.toString();
-              
-                },
                 controller: msgController,
                 onPressed: () {
                   msgController.clear();
@@ -90,11 +85,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   alignLeft: false,
                 ),
                 controller: phoneController,
-                onChanged: (value) {
-                  
-                    phoneNumber = value;
-                 
-                },
                 onPressed: () {
                   phoneController.clear();
                 },
@@ -120,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   CustomButton(
                     onPressed: () {
-                      Share.share('https://wa.me/$code$phoneNumber');
+                      Share.share('https://wa.me/$code${phoneController.text}');
                     },
                     title: 'Share',
                     color: Colors.teal,
